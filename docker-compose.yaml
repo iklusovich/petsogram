@@ -1,0 +1,13 @@
+
+
+services:
+
+  # Environment
+  project:
+    image: postgres
+    hostname: project
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
