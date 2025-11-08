@@ -1,0 +1,96 @@
+.carouselContainer {
+    display: flex;
+    height: 150px;
+    margin-left: 5%;
+}
+
+.prevItem, .preLastItem, .lastItem {
+    width: 100px;
+    height: 100px;
+    /*animation-name: slidein;*/
+    /*animation-duration: 1s;*/
+    /*animation-iteration-count: infinite; !* Повторить анимацию 2 раза *!*/
+}
+
+.lastItem {
+    animation-name: moveLast;
+    animation-duration: 3.0s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite; /* Повторить анимацию 2 раза */
+}
+
+.prevItem {
+    animation-name: movePrev;
+    animation-duration: 3.0s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite; /* Повторить анимацию 2 раза */
+}
+
+.preLastItem {
+
+    animation-name: movePreLast;
+    animation-timing-function: ease-out;
+    animation-duration: 3.0s;
+    animation-iteration-count: infinite; /* Повторить анимацию 2 раза */
+}
+
+.centerItem {
+    animation-name: moveCenter;
+    animation-duration: 3.0s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite; /* Повторить анимацию 2 раза */
+}
+
+@keyframes movePrev {
+    from {
+        opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+}
+
+@keyframes moveCenter {
+    from {
+        margin-left: 0;
+
+    }
+
+    to {
+        margin-left: -165%;
+        scale: .7;
+        margin-top: -17%;
+    }
+}
+
+@keyframes movePreLast {
+    from {
+        margin-left: 0;
+
+    }
+
+    to {
+        margin-left: -250%;
+        scale: 2;
+        margin-top: 20%;
+    }
+}
+
+@keyframes moveLast {
+    from {
+
+        opacity: 0;
+    }
+    50% {
+
+        display: inline-block;
+        opacity: 0;
+
+    }
+    to {
+        opacity: 1;
+        margin-left: -190%;
+
+    }
+}
+

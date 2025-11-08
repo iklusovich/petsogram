@@ -1,0 +1,29 @@
+.customSelectContainer {
+    position: relative;
+    display: flex;
+    justify-content: left;
+
+}
+
+.optionsContainer {
+    position: absolute;
+    width: 90%;
+    list-style: none;
+    color: black;
+    font-weight: bold;
+    border: 2px solid lightgray;
+    top: 20%;
+    background: white;
+
+    margin: 0 5%;
+    padding: 2% 0;
+    border-radius: 10px;
+}
+
+.optionsItem {
+    padding: 2% 6%;
+    cursor: pointer;
+    &:hover {
+        color: lightgray;
+    }
+}

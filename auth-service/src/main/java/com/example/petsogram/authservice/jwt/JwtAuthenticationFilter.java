@@ -16,7 +16,6 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     private final JwtUtils jwtUtils;
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -30,22 +29,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
-        // 1. Получаем заголовок Authorization
         final String authHeader = request.getHeader("Authorization");
-        // 2. Проверяем наличие и формат заголовка
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-        // 3. Извлекаем токен (после "Bearer ")
         final String jwt = authHeader.substring(7);
-        // 4. Проверяем токен
         if (jwtUtils.validateToken(jwt)) {
-            // 5. Получаем имя пользователя
             String username = String.valueOf(jwtUtils.getUsernameFromToken(jwt));
-            // 6. Загружаем пользователя из БД
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            // 7. Создаём объект аутентификации
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
                             userDetails,
@@ -54,10 +46,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             authentication.setDetails(
                     new WebAuthenticationDetailsSource().buildDetails(request));
-            // 8. Сохраняем в SecurityContext
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        // 9. Передаём запрос дальше по цепочке фильтров
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, x-xsrf-token");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+
         filterChain.doFilter(request, response);
     }
 }

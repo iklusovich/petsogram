@@ -10,12 +10,13 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "roles") // Указываем имя таблицы
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 20)
-    private String name; // Название роли (например: ROLE_USER, ROLE_ADMIN)
+
+    @Column(nullable = false, length = 20, columnDefinition = "VARCHAR(255) DEFAULT 'ROLE_USER'")
+    private String name;
 }

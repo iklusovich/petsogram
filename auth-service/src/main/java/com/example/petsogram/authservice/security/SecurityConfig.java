@@ -14,6 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -30,16 +36,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                // Включаем поддержку CORS в цепочке фильтров Spring Security
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                // Остальные настройки безопасности...
+                .csrf(csrf -> csrf.disable()) // Отключаем CSRF, если не используете
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // Разрешаем доступ к аутентификации
-                        .requestMatchers("/api/protected").authenticated() // Защищаем конкретный эндпоинт
-                        .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)// Не используем сессии
-                )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                        // Разрешаем доступ к эндпоинту регистрации без аутентификации
+                        .requestMatchers("/api/auth/register").permitAll()
+                        .anyRequest().authenticated()
+                );
 
         return http.build();
     }
@@ -47,6 +52,25 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);// Сила шифрования
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        // Разрешаем запросы с домена вашего React-приложения
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        // Разрешаем нужные HTTP-методы, включая OPTIONS
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        // Разрешаем все заголовки
+        configuration.setAllowedHeaders(List.of("*"));
+        // Разрешаем передачу куки и заголовков авторизации
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // Применяем конфигурацию ко всем эндпоинтам
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 
     @Bean

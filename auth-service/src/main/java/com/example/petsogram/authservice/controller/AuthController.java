@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthenticationManager authenticationManager;
@@ -48,17 +50,25 @@ public class AuthController {
 
     @PostMapping("auth/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+        System.out.println(registerRequest.getPassword()+ registerRequest.getUsername());
+        System.out.println("++++++++++++++++");
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity.badRequest().body("Username already exists");
         }
 
+        if (userRepository.existsByPhone(registerRequest.getPhone())) {
+            return ResponseEntity.badRequest().body("Phone already registry");
+        }
+
         User user = new User();
         user.setUsername(registerRequest.getUsername());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword())); // Шифруем пароль!
+        user.setPhone(registerRequest.getPhone());
+        user.setSex(registerRequest.getSex());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
-        // Назначаем роль (обычно "ROLE_USER" создаётся при старте приложения)
+
         Role userRole = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("Error: Role USER not found."));
+                .orElseThrow(() -> new RuntimeException("Error: Role USER not found.1"));
 
         user.setRoles(Collections.singleton(userRole));
         userRepository.save(user);
