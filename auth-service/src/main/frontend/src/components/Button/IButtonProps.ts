@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 export enum ButtonViews {
     SUCCESS='success',
     ERROR='error',
@@ -17,4 +15,6 @@ export interface IButtonProps {
     type: "button" | "submit" | "reset";
     value: string;
     view?: ButtonViews;
+    isDisabled?: boolean;
+    changeFormType: (type: ButtonViews) => void;
 }

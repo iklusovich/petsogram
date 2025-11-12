@@ -1,5 +1,3 @@
-import React from "react";
-import {ICustomSelectProps} from "../CustomSelect/ICustomSelectProps";
 
 export enum ITypeProps {
     PASSWORD = "password",
@@ -11,14 +9,24 @@ export enum ITypeProps {
     SELECT = "select",
 }
 
-export interface ITextFieldProps extends React.HTMLAttributes<HTMLInputElement> {
-    type: ITypeProps;
-    placeholder?: string;
-    disabled?: boolean;
-    handleOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    image?: string;
-    value?: string;
-    closeSelect?: () => boolean;
+export enum IFieldName {
+    USERNAME = "username",
+    PASSWORD = "password",
+    REPEAT_PASSWORD = "repeatPassword",
+    EMAIL = "email",
+    SEX="sex",
+    PHONE="phone"
 }
 
-export type ITextFieldSelect = ITextFieldProps & ICustomSelectProps;
+export interface ITextFieldProps {
+    type: ITypeProps;
+    placeholder?: string;
+    fieldName: IFieldName;
+    disabled?: boolean;
+    image?: string;
+    optionValue?: string;
+    toggleDropdownHandler?: (isShow: boolean) => void;
+    setIsRevertImage?: (isShow: boolean) => void;
+    isRevertImage?: boolean;
+}
+

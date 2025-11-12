@@ -1,9 +1,7 @@
-export interface IFormProps {
-    type: FormType;
-    setFormType: (type: FormType) => void;
-}
-
-export enum FormType {
-    LOGIN = 'LOGIN',
-    REGISTRATION = 'REGISTRATION',
+export interface IFormValues {
+    username: string;
+    password: string;
+    repeatPassword: string;
+    sex: string;
+    phone: string;
 }

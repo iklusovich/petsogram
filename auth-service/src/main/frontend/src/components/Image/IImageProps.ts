@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface IImageProps extends React.HTMLAttributes<HTMLImageElement> {
     src: string;
     type: ImageType | ArrowImageType;

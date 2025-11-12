@@ -1,20 +1,30 @@
 import {Action} from "redux-saga";
-import {FETCH_REGISTRY, FETCH_REGISTRY_ERROR} from "../constants/constants";
+import {FETCH_LOGIN, FETCH_LOGIN_ERROR, FETCH_REGISTRY, FETCH_REGISTRY_ERROR} from "../constants/constants";
 
 export interface User {
-    id: string;
     phone: string;
     username: string;
     password: string;
     sex: string;
 }
 
-export interface IRequestAction extends Action {
+export interface IRequestRegistrationAction extends Action {
     type: typeof  FETCH_REGISTRY;
     payload: User;
 }
-export interface IErrorAction extends Error {
+export interface IErrorRegistrationAction extends Error {
     type: typeof  FETCH_REGISTRY_ERROR;
+    payload: {
+        message: string;
+    };
+}
+
+export interface IRequestLoginAction extends Action {
+    type: typeof  FETCH_LOGIN;
+    payload: Pick<User, "password" | "username">;
+}
+export interface IErrorLoginAction extends Error {
+    type: typeof  FETCH_LOGIN_ERROR;
     payload: {
         message: string;
     };

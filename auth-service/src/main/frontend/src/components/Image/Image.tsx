@@ -12,7 +12,8 @@ export const Image:FC<IImageProps> = (props) => {
             width={width}
             height={height}
             alt={type}
-            className={className}/>
+            className={className}
+        />
         </div>
     );
 };

@@ -1,5 +1,8 @@
-import {IFormProps} from "../IFormProps";
+import {IFormValues} from "../IFormProps";
+import {FormikErrors, FormikTouched} from "formik";
 
-export interface IFormBodyProps extends IFormProps  {
-
+export interface IFormBodyProps  {
+    errors: FormikErrors<IFormValues>
+    touched: FormikTouched<IFormValues>
+    isRegistrationForm: boolean
 }

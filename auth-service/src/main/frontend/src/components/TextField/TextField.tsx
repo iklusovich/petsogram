@@ -1,19 +1,22 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {FC} from 'react';
 import {ITextFieldProps} from "./ITextFieldProps";
 import styles from "./textField.module.css"
 import cn from "classnames"
 import {Image} from "../Image"
 import {ImageType} from "../Image/IImageProps";
+import {Field} from "formik";
 
 export const TextField: FC<ITextFieldProps> = (props) => {
 
-    const {type, placeholder, image, value, closeSelect} = props;
-    const [isRevertImage, setIsRevertImage] = useState<boolean>(true);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const {type, placeholder, image, toggleDropdownHandler, optionValue, setIsRevertImage, isRevertImage, fieldName} = props;
 
-    useEffect(() => {
-        setIsRevertImage(prev => !prev);
-    }, [closeSelect]);
+    const onShowOptionsHandler = () => {
+        if (toggleDropdownHandler && setIsRevertImage) {
+            setIsRevertImage(!isRevertImage);
+            toggleDropdownHandler(!isRevertImage);
+        }
+        return;
+    }
 
     const imagesClasses = {
         imageContainer: styles.imageContainer,
@@ -22,15 +25,15 @@ export const TextField: FC<ITextFieldProps> = (props) => {
 
     return (
         <div className={styles.textFieldContainer}>
-            <input
-                name="revert"
+            <Field
+                id={fieldName}
+                name={fieldName}
                 type={type}
+                value={optionValue}
                 placeholder={placeholder}
                 className={cn(styles.item)}
-                value={value}
-                ref={inputRef}
             />
-            {image && <div className={cn({
+            {image && <div onClick={onShowOptionsHandler} className={cn({
                 [imagesClasses.imageContainer]: true,
                 [imagesClasses.revert]: isRevertImage
             })}>

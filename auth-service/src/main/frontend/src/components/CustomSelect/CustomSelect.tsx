@@ -1,44 +1,43 @@
 import React, {FC, useState} from 'react';
 import {TextField} from "../TextField";
-import {ITypeProps} from "../TextField/ITextFieldProps";
+import {IFieldName, ITypeProps} from "../TextField/ITextFieldProps";
 import {ICustomSelectProps} from "./ICustomSelectProps";
 import styles from "./customSelect.module.css"
 
 export const CustomSelect: FC<ICustomSelectProps> = (props) => {
 
     const [isShowOptions, setIsShowOptions] = useState<boolean>(false);
-    const [value, setValue] = useState<string>("");
-    const {options, image} = props;
+    const {options, image, setOptionValue, optionValue} = props;
+    const [isRevertImage, setIsRevertImage] = useState<boolean>(false);
 
-    const toggleOptions = () => setIsShowOptions(!isShowOptions);
+    const toggleDropdownHandler = (isShow: boolean) => setIsShowOptions(isShow);
 
 
-    const changeGenderValue = (option: string) => {
-        setValue(option);
-    }
-
-    const closeSelect = () => {
-
-        setIsShowOptions(false);
-        return isShowOptions;
+    const changeOptionValue = (option: string) => {
+        toggleDropdownHandler(false);
+        setOptionValue(option);
+        setIsRevertImage(false);
     }
 
     const renderOptions = (options: string[]) =>
         <ul className={styles.optionsContainer}>
             {options.map(option =>
-                <li key={option} onClick={() => changeGenderValue(option)} className={styles.optionsItem}>{option}</li>
+                <li key={option} onClick={()=>changeOptionValue(option) } className={styles.optionsItem}>{option}</li>
             )}
         </ul>
 
     return (
-        <div className={styles.customSelectContainer} onClick={toggleOptions}>
+        <div className={styles.customSelectContainer}>
             <TextField
+                toggleDropdownHandler={toggleDropdownHandler}
+                fieldName={IFieldName.SEX}
                 type={ITypeProps.SELECT}
                 image={image}
                 placeholder={options[0]}
                 disabled={true}
-                value={value}
-                closeSelect = {closeSelect}
+                optionValue={optionValue}
+                isRevertImage={isRevertImage}
+                setIsRevertImage={setIsRevertImage}
             />
             {isShowOptions && renderOptions(options)}
         </div>
