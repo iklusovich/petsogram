@@ -36,6 +36,9 @@ public class User {
     @Column(nullable = false)
     private String sex;
 
+    @Column(nullable = false, name = "country_code")
+    private String countryCode;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",

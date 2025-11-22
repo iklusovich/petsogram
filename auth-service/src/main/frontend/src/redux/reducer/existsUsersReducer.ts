@@ -1,19 +1,25 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 import {FETCH_EXISTS} from "../constants/constants";
-import {User} from "../types/types";
+import {IFieldName} from "../../components/TextField/ITextFieldProps";
 
-const login = createAction<User>(FETCH_EXISTS)
+const exists = createAction<{
+    value: string;
+    type: IFieldName.PHONE | IFieldName.USERNAME;
+}>(FETCH_EXISTS)
 
 interface State {
-    user: Pick<User, "username" | "phone"> | null
+    value: string,
+    type: IFieldName.USERNAME | IFieldName.PHONE
 }
 
 let initialState: State = {
-    user: null,
+    value: "",
+    type: IFieldName.USERNAME
 }
 
 export const existsUsersReducer = createReducer(initialState, (builder) => {
-    builder.addCase(login, (state, action) => ({
-        user: action.payload,
-    }));
+    builder.addCase(exists, (state, action) => {
+        state.value = action.payload.value;
+        state.type = action.payload.type;
+    });
 })

@@ -6,6 +6,9 @@ import {
     FETCH_LOGIN_SUCCESS, FETCH_LOGIN_ERROR, FETCH_EXISTS, FETCH_EXISTS_SUCCESS, FETCH_EXISTS_ERROR
 } from "../constants/constants";
 import {User} from "../types/types";
+import {IFieldName} from "../../components/TextField/ITextFieldProps";
+
+//TODO навести порядок в экшенах и типах, какое-то дублирование, возможно возвращать надо typeof конкретного типа (MIDDLE)
 
 export function fetchRegistryAction  (user: User) {
     return {
@@ -49,17 +52,17 @@ export const fetchLoginErrorAction = (error: string) => {
     }
 }
 
-export const fetchExistsAction   = (user: Pick<User, "phone" | "username">) => {
+export const fetchExistsAction   = (value: string, type: IFieldName.PHONE | IFieldName.USERNAME) => {
     return {
         type: FETCH_EXISTS,
-        payload: user
+        payload: {value, type}
     }
 }
 
-export const fetchExistsSuccessAction   = (user: Pick<User, "phone" | "username">) => {
+export const fetchExistsSuccessAction   = (payload: boolean) => {
     return {
         type: FETCH_EXISTS_SUCCESS,
-        payload: user
+        payload
     }
 }
 

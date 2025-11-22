@@ -44,6 +44,9 @@ const validationSchema = Yup.object<IFormValues>().shape({
         .required(IErrorFieldTexts.REQUIRED),
     phone: Yup.string()
         .required('Введите номер')
+        .test('exists-user', "user exists", function (value){
+            console.log(value)
+        })
         .test('strict-international', 'Введите номер строго в международном формате', function(value) {
             if (!value) return false;
             const { countryCode } = this.parent;
