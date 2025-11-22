@@ -3,7 +3,7 @@ import {
     FETCH_REGISTRY_SUCCESS,
     FETCH_REGISTRY_ERROR,
     FETCH_LOGIN,
-    FETCH_LOGIN_SUCCESS, FETCH_LOGIN_ERROR
+    FETCH_LOGIN_SUCCESS, FETCH_LOGIN_ERROR, FETCH_EXISTS, FETCH_EXISTS_SUCCESS, FETCH_EXISTS_ERROR
 } from "../constants/constants";
 import {User} from "../types/types";
 
@@ -21,7 +21,7 @@ export const fetchSuccessAction = (user: User) => {
     }
 }
 
-export const fetchErrorAction = (error: Error) => {
+export const fetchErrorAction = (error: string) => {
     return {
         type: FETCH_REGISTRY_ERROR,
         payload: error
@@ -45,6 +45,27 @@ export const fetchLoginSuccessAction = (user: Pick<User, "password" | "username"
 export const fetchLoginErrorAction = (error: string) => {
     return {
         type: FETCH_LOGIN_ERROR,
+        payload: error
+    }
+}
+
+export const fetchExistsAction   = (user: Pick<User, "phone" | "username">) => {
+    return {
+        type: FETCH_EXISTS,
+        payload: user
+    }
+}
+
+export const fetchExistsSuccessAction   = (user: Pick<User, "phone" | "username">) => {
+    return {
+        type: FETCH_EXISTS_SUCCESS,
+        payload: user
+    }
+}
+
+export const fetchExistsErrorAction   = (error: string) => {
+    return {
+        type: FETCH_EXISTS_ERROR,
         payload: error
     }
 }

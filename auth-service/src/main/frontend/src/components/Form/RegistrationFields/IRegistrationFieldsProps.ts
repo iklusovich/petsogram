@@ -1,8 +1,10 @@
 import {IFormValues} from "../IFormProps";
+import {FormikErrors, FormikTouched} from "formik";
 
 export interface IRegistrationFieldsProps {
-    values: IFormValues;
-    onFormChange: (values: string) => void;
     optionValue:string;
     setOptionValue:(value:string) => void;
+    values: IFormValues;
+    touched: FormikTouched<IFormValues>;
+    errors: FormikErrors<IFormValues>;
 }

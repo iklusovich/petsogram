@@ -35,3 +35,7 @@
     transform: rotate(180deg);
     color: rebeccapurple;
 }
+.error {
+    border-bottom: 2px solid red;
+    color: red;
+}

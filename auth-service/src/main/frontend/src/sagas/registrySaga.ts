@@ -1,8 +1,10 @@
 import {call, put, takeLatest} from "redux-saga/effects";
 import {api} from "../api/api";
-import {fetchLoginSuccessAction, fetchSuccessAction} from "../redux/actions/actions";
+import {fetchErrorAction, fetchLoginSuccessAction, fetchSuccessAction} from "../redux/actions/actions";
 import {IRequestLoginAction, IRequestRegistrationAction, User} from "../redux/types/types";
-import {FETCH_LOGIN, FETCH_LOGIN_ERROR, FETCH_REGISTRY, FETCH_REGISTRY_ERROR} from "../redux/constants/constants";
+import {FETCH_LOGIN, FETCH_LOGIN_ERROR, FETCH_REGISTRY} from "../redux/constants/constants";
+
+//TODO Разбить на отдельные саги и проверить работоспособность! (LOW)
 
 function* fetchRegistrySaga(action: IRequestRegistrationAction) {
     try {
@@ -10,12 +12,8 @@ function* fetchRegistrySaga(action: IRequestRegistrationAction) {
         const user: User = yield call(api.registration, data);
         yield put(fetchSuccessAction(user));
     } catch ({code, message, name}) {
-        const serializableError = {
-            message: message,
-            name: name,
-            code: code,
-        };
-        yield put({ type: FETCH_REGISTRY_ERROR, payload: serializableError });
+
+        yield put(fetchErrorAction(message as string));
     }
 }
 
@@ -25,6 +23,7 @@ function* fetchLoginSaga(action: IRequestLoginAction) {
         const user: Pick<User, "password" | "username"> = yield call(api.login, data);
         yield put(fetchLoginSuccessAction(user));
     } catch ({code, message, name}) {
+        //TODO разобраться с типизацией экшена для ошибки, если это возможно, если нет переделать на прокидывание только мисаги (LOW)
         const serializableError = {
             message: message,
             name: name,

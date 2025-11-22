@@ -1,15 +1,12 @@
 .carouselContainer {
     display: flex;
     height: 150px;
-    margin-left: 5%;
+    margin-left: 10%;
 }
 
 .prevItem, .preLastItem, .lastItem {
     width: 100px;
     height: 100px;
-    /*animation-name: slidein;*/
-    /*animation-duration: 1s;*/
-    /*animation-iteration-count: infinite; !* Повторить анимацию 2 раза *!*/
 }
 
 .lastItem {

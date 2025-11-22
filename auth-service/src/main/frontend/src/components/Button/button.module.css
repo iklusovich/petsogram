@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     padding-top: 0;
+    position: relative;
 
 }
 
@@ -19,6 +20,10 @@
 
 .btn {
     width: 80%;
+    font-family: "Galindo", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 1px;
     padding: 10px 5px;
     border: none;
     outline: none;
@@ -33,7 +38,7 @@
 }
 
 .buttonSignIn {
-    background-color: #000;
+    background-color: black;
     color: white;
     &:hover {
         background-color: white;
@@ -49,4 +54,12 @@
         background-color: #000;
         color: white;
     }
+}
+
+.buttonImage {
+    width: 40rem;
+    left: 70%;
+    top: 60%;
+    position: absolute;
+    z-index: 4;
 }

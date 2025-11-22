@@ -1,55 +1,49 @@
-import React, {useEffect} from 'react';
-import {Image} from "../Image";
-import {ImageType} from "../Image/IImageProps";
-import {animals as imageList} from "../Image/ImagesList";
+import React, { useEffect, useMemo } from 'react';
+import { Image } from "../Image";
+import { ImageType } from "../Image/IImageProps";
+import { animals as imageList } from "../Image/ImagesList";
 import style from "./imageCarousel.module.css";
 
+type CarouselImageType = Exclude<ImageType, ImageType.LOGO>;
+
+const CAROUSEL_IMAGES: CarouselImageType[] = Object.values(ImageType)
+    .filter((type): type is CarouselImageType => type !== ImageType.LOGO);
+
 export const ImageCarousel = () => {
+    const [startIndex, setStartIndex] = React.useState(0);
 
-
-    const [images, setImages] = React.useState<ImageType[]>([
-        ...Object.values(ImageType).slice(0, 4)
-    ]);
+    const currentImages = useMemo(() => {
+        const len = CAROUSEL_IMAGES.length;
+        return Array.from({ length: 4 }, (_, i) =>
+            CAROUSEL_IMAGES[(startIndex + i) % len]
+        );
+    }, [startIndex]);
 
     useEffect(() => {
-        let counter = 0;
-        const imagesArray  = Object.values(ImageType);
         const interval = setInterval(() => {
-            counter++;
-            if (counter > imagesArray.length - 4) {
-                setImages(
-                    [
-                        ...imagesArray.slice(counter, imagesArray.length),
-                        ...imagesArray.slice(0, counter)
-                    ]
-                        .slice(0,4));
+            setStartIndex(prev => (prev + 1) % CAROUSEL_IMAGES.length);
+        }, 3000);
 
-            } else {
-                setImages(imagesArray.slice(counter, counter + 4));
-            }
-            if (counter === imagesArray.length) {
-                counter = 0;
-            }
-
-        }, 3000)
-
-        return () => {
-            clearInterval(interval);
-        }
+        return () => clearInterval(interval);
     }, []);
 
-    const imageListRender = (images: ImageType[]) => {
-        return <div className={style.carouselContainer}>
-            <Image src={imageList[images[0]]} type={images[0]} className={style.prevItem}/>
-            <Image src={imageList[images[1]]} type={images[1]} className={style.centerItem}/>
-            <Image src={imageList[images[2]]} type={images[2]} className={style.preLastItem}/>
-            <Image src={imageList[images[3]]} type={images[3]} className={style.lastItem}/>
-        </div>
-    }
+    const classNames = [
+        style.prevItem,
+        style.centerItem,
+        style.preLastItem,
+        style.lastItem
+    ];
 
     return (
         <div className={style.carouselContainer}>
-            {imageListRender(images)}
+            {currentImages.map((type, index) => (
+                <Image
+                    key={`${type}-${index}`}
+                    src={imageList[type]}
+                    type={type}
+                    className={classNames[index]}
+                />
+            ))}
         </div>
     );
 };

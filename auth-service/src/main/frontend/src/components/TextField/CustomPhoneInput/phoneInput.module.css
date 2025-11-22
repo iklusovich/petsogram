@@ -1,0 +1,13 @@
+.container {
+   border-bottom: 2px solid black;
+    width: 78%;
+    margin: 10px auto;
+}
+.input {
+    justify-content: center;
+    border: none;
+}
+
+.containerError {
+    border-bottom: 2px solid red;
+}

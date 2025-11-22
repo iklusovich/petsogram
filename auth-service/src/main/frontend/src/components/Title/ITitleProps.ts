@@ -12,6 +12,7 @@ export enum TitleValues {
 export interface ITitleProps {
     title: TitleValues;
     size: TitleSize
+    loading: boolean;
 }
 
 

@@ -7,7 +7,7 @@ import styles from "./customSelect.module.css"
 export const CustomSelect: FC<ICustomSelectProps> = (props) => {
 
     const [isShowOptions, setIsShowOptions] = useState<boolean>(false);
-    const {options, image, setOptionValue, optionValue} = props;
+    const {options, image, setOptionValue, optionValue, errors, touched} = props;
     const [isRevertImage, setIsRevertImage] = useState<boolean>(false);
 
     const toggleDropdownHandler = (isShow: boolean) => setIsShowOptions(isShow);
@@ -38,6 +38,9 @@ export const CustomSelect: FC<ICustomSelectProps> = (props) => {
                 optionValue={optionValue}
                 isRevertImage={isRevertImage}
                 setIsRevertImage={setIsRevertImage}
+                errors={errors}
+                touched={touched}
+                value={optionValue}
             />
             {isShowOptions && renderOptions(options)}
         </div>

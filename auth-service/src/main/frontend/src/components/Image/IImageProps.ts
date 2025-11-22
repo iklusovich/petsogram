@@ -2,9 +2,9 @@ import React from "react";
 
 export interface IImageProps extends React.HTMLAttributes<HTMLImageElement> {
     src: string;
-    type: ImageType | ArrowImageType;
-    width?: number;
-    height?: number;
+    type: ImageType;
+    width?: number | string;
+    height?: number | string;
 }
 
 export enum ImageType {
@@ -15,9 +15,5 @@ export enum ImageType {
     FISH='fish',
     PIG='pig',
     HAMSTER='hamster',
-}
-
-export enum ArrowImageType {
-    ARROW='arrow',
-    PET_FOR_ARROW='pet_for_arrow',
+    LOGO='logo',
 }

@@ -5,10 +5,22 @@ import cn from "classnames"
 import {Image} from "../Image"
 import {ImageType} from "../Image/IImageProps";
 import {Field} from "formik";
+import {ErrorField} from "../Form/ErrorField";
 
 export const TextField: FC<ITextFieldProps> = (props) => {
 
-    const {type, placeholder, image, toggleDropdownHandler, optionValue, setIsRevertImage, isRevertImage, fieldName} = props;
+    const {
+        type,
+        placeholder,
+        image,
+        toggleDropdownHandler,
+        setIsRevertImage,
+        isRevertImage,
+        fieldName,
+        value,
+        touched,
+        errors
+    } = props;
 
     const onShowOptionsHandler = () => {
         if (toggleDropdownHandler && setIsRevertImage) {
@@ -29,10 +41,14 @@ export const TextField: FC<ITextFieldProps> = (props) => {
                 id={fieldName}
                 name={fieldName}
                 type={type}
-                value={optionValue}
+                value={value}
                 placeholder={placeholder}
-                className={cn(styles.item)}
+                className={cn({
+                    [styles.item]: true,
+                    [styles.error]:  !!touched[fieldName] && !!errors[fieldName]
+                })}
             />
+
             {image && <div onClick={onShowOptionsHandler} className={cn({
                 [imagesClasses.imageContainer]: true,
                 [imagesClasses.revert]: isRevertImage
@@ -43,8 +59,11 @@ export const TextField: FC<ITextFieldProps> = (props) => {
                     width={20}
                     height={20}
                 />
+
             </div>
+
             }
+            <ErrorField touched={touched} errors={errors} nameField={fieldName}/>
         </div>
     );
 };
