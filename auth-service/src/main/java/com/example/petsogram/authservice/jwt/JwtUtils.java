@@ -21,7 +21,7 @@ import javax.crypto.SecretKey;
 @Component
 public class JwtUtils {
 
-    @Value("${jwt.secret}")
+    @Value("${JWT_SECRET}")
     private String jwtSecret;
 
     public String generateToken(UserDetails userDetails) {
@@ -59,7 +59,6 @@ public class JwtUtils {
         return false;
     }
 
-    // Получение имени пользователя из токена
     public Claims getUsernameFromToken(String token) {
 
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));

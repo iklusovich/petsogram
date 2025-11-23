@@ -51,7 +51,7 @@ export interface IExistsUserAction extends Action {
 
 export interface IExistsUserSuccessAction extends Action {
     type: typeof FETCH_EXISTS_SUCCESS;
-    payload: boolean
+    payload: boolean;
 }
 
 export interface IExistsUserErrorAction extends Error {

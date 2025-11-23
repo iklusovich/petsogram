@@ -7,30 +7,27 @@ import {ICustomPhoneInputProps} from "./ICustomPhoneInputProps";
 import {ErrorField} from "../../Form/ErrorField";
 import cn from "classnames";
 import {useField} from "formik";
+import {normalizePhone} from "../../../utils/function";
 
 export const CustomPhoneInput: FC<PhoneInputProps & ICustomPhoneInputProps> = ({
                                                                                    inputProps,
                                                                                    errors,
                                                                                    touched,
-                                                                                   setCountryValue,
-                                                                                   setPhoneValue,
                                                                                    country = "ru",
                                                                                }) => {
-
     const [field] = useField(IFieldName.PHONE);
     const [countryField] = useField(IFieldName.COUNTRY_CODE);
 
     const handleChange = (value: string, countryData: CountryData | {}) => {
+
         const countryCode = countryData && 'countryCode' in countryData
             ? (countryData.countryCode as string).toUpperCase()
             : 'RU';
 
-        const normalizedPhone = value.startsWith('+') ? value : `+${value}`;
-
         field.onChange({
             target: {
                 name: field.name,
-                value: normalizedPhone,
+                value: normalizePhone(value),
             }
         });
 
@@ -40,8 +37,6 @@ export const CustomPhoneInput: FC<PhoneInputProps & ICustomPhoneInputProps> = ({
                 value: countryCode,
             }
         });
-        setCountryValue(countryCode);
-        setPhoneValue(normalizedPhone);
     };
 
     return (

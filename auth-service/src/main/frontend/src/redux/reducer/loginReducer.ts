@@ -4,16 +4,16 @@ import {User} from "../types/types";
 
 const login = createAction<User>(FETCH_REGISTRY)
 
-interface State {
+export interface IAuthState {
     user: Pick<User, "username" | "password"> | null
 }
 
-let initialState: State = {
+let initialState: IAuthState = {
     user: null,
 }
 
 export const loginReducer = createReducer(initialState, (builder) => {
-    builder.addCase(login, (state, action) => ({
-        user: action.payload,
-    }));
+    builder.addCase(login, (state, action) => {
+        state.user = action.payload
+    });
 })

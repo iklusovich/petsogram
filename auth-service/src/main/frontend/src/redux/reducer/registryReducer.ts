@@ -6,26 +6,26 @@ const registry = createAction<User>(FETCH_REGISTRY);
 const registrySuccess = createAction<null>(FETCH_REGISTRY_SUCCESS);
 const registryError = createAction<null>(FETCH_REGISTRY_ERROR);
 
-interface State {
+export interface IRegistrationState {
     user: User | null
     loading: boolean
 }
 
-let initialState: State = {
+let initialState: IRegistrationState = {
     user: null,
     loading: false
 }
 export const registryReducer = createReducer(initialState, (builder) => {
-    builder.addCase(registry, (state, action) => ({
-        user: action.payload,
-        loading: true
-    }));
-    builder.addCase(registrySuccess, (state, action) => ({
-        user: null,
-        loading: false
-    }));
-    builder.addCase(registryError, (state, action) => ({
-        user: null,
-        loading: false
-    }));
+    builder.addCase(registry, (state, action) => {
+        state.user = action.payload
+        state.loading = true
+    });
+    builder.addCase(registrySuccess, (state, action) => {
+        state.user = null
+        state.loading = false
+    });
+    builder.addCase(registryError, (state, action) => {
+        state.user = null
+        state.loading = false
+    });
 })

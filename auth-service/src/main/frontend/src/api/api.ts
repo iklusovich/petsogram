@@ -18,9 +18,13 @@ export const api = {
     }),
 
     existsUser: async (params: {value: string, type: string}): Promise<boolean> => {
-        const {value, type} = params;
-        const {data} = await axios.get(`/api/exists?value=${value}&type=${type}`);
-        return data;
+        const response = await axios.get(`${AUTH_URL}/exists`, {
+            params: {
+                value: params.value,
+                type: params.type
+            }
+        });
+        return response.data;
     }
 };
 

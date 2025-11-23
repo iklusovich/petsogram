@@ -36,7 +36,7 @@ public class User {
     @Column(nullable = false)
     private String sex;
 
-    @Column(nullable = false, name = "country_code")
+    @Column(nullable = true)
     private String countryCode;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -1,25 +1,18 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
-import {FETCH_EXISTS} from "../constants/constants";
-import {IFieldName} from "../../components/TextField/ITextFieldProps";
+import {FETCH_EXISTS_SUCCESS} from "../constants/constants";
 
-const exists = createAction<{
-    value: string;
-    type: IFieldName.PHONE | IFieldName.USERNAME;
-}>(FETCH_EXISTS)
+const exists = createAction<boolean>(FETCH_EXISTS_SUCCESS)
 
-interface State {
-    value: string,
-    type: IFieldName.USERNAME | IFieldName.PHONE
+export interface IExistState {
+   isExists: boolean;
 }
 
-let initialState: State = {
-    value: "",
-    type: IFieldName.USERNAME
+const initialState: IExistState = {
+    isExists: false,
 }
 
 export const existsUsersReducer = createReducer(initialState, (builder) => {
     builder.addCase(exists, (state, action) => {
-        state.value = action.payload.value;
-        state.type = action.payload.type;
+        state.isExists = action.payload;
     });
 })

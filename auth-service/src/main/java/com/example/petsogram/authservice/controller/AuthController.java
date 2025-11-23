@@ -77,14 +77,19 @@ public class AuthController {
 
     }
 
-    @GetMapping("/exists")
-    public boolean existsUser(@RequestParam("type") ExistsType type,
-                              @RequestParam("value") String value) {
-        return switch (type) {
+    @GetMapping("auth/exists")
+    public ResponseEntity<Boolean> existsUser(
+            @RequestParam("type") String typeStr,
+            @RequestParam("value") String value) {
+
+        ExistsType type = ExistsType.fromValue(typeStr);
+
+        boolean result = switch (type) {
             case USERNAME -> userRepository.existsByUsername(value);
             case PHONE -> userRepository.existsByPhone(value);
-            default -> throw new IllegalArgumentException("Invalid type: " + type);
         };
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/protected")

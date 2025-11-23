@@ -6,14 +6,20 @@ import {ItemsData} from "./ItemsData";
 import {IFormBodyProps} from "./IForrmBodyProps";
 import {CustomPhoneInput} from "../../TextField/CustomPhoneInput";
 
-export const FormBody: FC<IFormBodyProps> = ({isRegistrationForm, values, touched, errors, setPhoneValue, setCountryValue}) => {
+export const FormBody: FC<IFormBodyProps> = ({
+                                                 isRegistrationForm,
+                                                 values: {username, password},
+                                                 touched,
+                                                 errors,
+                                             }) => {
+
     return (
         <div className={styles.formBody}>
             <TextField
                 fieldName={IFieldName.USERNAME}
                 type={ITypeProps.TEXT}
                 placeholder={ItemsData.NAME_PLACEHOLDER}
-                value={values.username}
+                value={username}
                 touched={touched}
                 errors={errors}
             />
@@ -21,9 +27,6 @@ export const FormBody: FC<IFormBodyProps> = ({isRegistrationForm, values, touche
                 <CustomPhoneInput
                     touched={touched}
                     errors={errors}
-                    values={values}
-                    setPhoneValue={setPhoneValue}
-                    setCountryValue={setCountryValue}
                     inputProps={{id: IFieldName.PHONE, name: IFieldName.PHONE}}
                 />
             }
@@ -31,7 +34,7 @@ export const FormBody: FC<IFormBodyProps> = ({isRegistrationForm, values, touche
                 type={ITypeProps.PASSWORD}
                 fieldName={IFieldName.PASSWORD}
                 placeholder={ItemsData.PASSWORD_PLACEHOLDER}
-                value={values.password}
+                value={password}
                 touched={touched}
                 errors={errors}
             />
