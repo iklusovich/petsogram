@@ -5,6 +5,9 @@ import cn from "classnames";
 import {logoImage} from "../Image/ImagesList";
 import {Logo} from "../Logo";
 
+//TODO visual bug when mounting image(LOW)
+//TODO when hover btn image, don't change btn classes(MIDDLE)
+
 export const Button: FC<IButtonProps> = React.memo(({
                                                         type,
                                                         value,

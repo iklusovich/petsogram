@@ -1,8 +1,8 @@
 import {call, put, takeLatest} from "redux-saga/effects";
 import {api} from "../api/api";
-import {fetchErrorAction, fetchLoginSuccessAction, fetchSuccessAction} from "../redux/actions/actions";
 import {IRequestLoginAction, IRequestRegistrationAction, User} from "../redux/types/types";
 import {FETCH_LOGIN, FETCH_LOGIN_ERROR, FETCH_REGISTRY} from "../redux/constants/constants";
+import {fetchErrorAction, fetchLoginSuccessAction, fetchSuccessAction} from "../redux/actions/authActions";
 
 //TODO Разбить на отдельные саги и проверить работоспособность! (LOW)
 

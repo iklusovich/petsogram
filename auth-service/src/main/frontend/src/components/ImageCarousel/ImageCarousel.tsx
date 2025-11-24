@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo } from 'react';
-import { Image } from "../Image";
-import { ImageType } from "../Image/IImageProps";
-import { animals as imageList } from "../Image/ImagesList";
+import React, {useEffect, useMemo} from 'react';
+import {Image} from "../Image";
+import {ImageType} from "../Image/IImageProps";
+import {animals as imageList} from "../Image/ImagesList";
 import style from "./imageCarousel.module.css";
 
 type CarouselImageType = Exclude<ImageType, ImageType.LOGO>;
@@ -9,12 +9,14 @@ type CarouselImageType = Exclude<ImageType, ImageType.LOGO>;
 const CAROUSEL_IMAGES: CarouselImageType[] = Object.values(ImageType)
     .filter((type): type is CarouselImageType => type !== ImageType.LOGO);
 
+//TODO doing loading from server all images or think about memoization, SSR???? (HIGH)
+
 export const ImageCarousel = () => {
     const [startIndex, setStartIndex] = React.useState(0);
 
     const currentImages = useMemo(() => {
         const len = CAROUSEL_IMAGES.length;
-        return Array.from({ length: 4 }, (_, i) =>
+        return Array.from({length: 4}, (_, i) =>
             CAROUSEL_IMAGES[(startIndex + i) % len]
         );
     }, [startIndex]);

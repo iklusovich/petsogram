@@ -1,13 +1,17 @@
 import React from 'react';
 import './App.css';
 import {Form} from "./components/Form";
+import {BrowserRouter, Route, Routes} from "react-router";
 
-function App() {
-   return (
+export const App = () => {
+    return (
         <div className="app">
-                <Form/>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Form/>}></Route>
+                </Routes>
+            </BrowserRouter>
         </div>
     );
 }
 
-export default App;

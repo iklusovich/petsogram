@@ -9,6 +9,10 @@ import cn from "classnames";
 import {useField} from "formik";
 import {normalizePhone} from "../../../utils/function";
 
+
+//TODO change select arrow, хз получиться или нет, сделать, как в селекте с полом,
+// возможна эта либа не поддерживает такое или очень криво все будет (LOW)
+
 export const CustomPhoneInput: FC<PhoneInputProps & ICustomPhoneInputProps> = ({
                                                                                    inputProps,
                                                                                    errors,

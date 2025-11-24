@@ -9,7 +9,7 @@ import {FormFooter} from "./FormFooter";
 import {Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {ButtonViews} from "../Button/IButtonProps";
-import {fetchLoginAction, fetchRegistryAction} from "../../redux/actions/actions";
+import {actions} from "../../redux/actions/actions";
 import {IFieldName} from "../TextField/ITextFieldProps";
 import {ICustomSelectValues} from "../CustomSelect/ICustomSelectProps";
 import {RootState} from "../../redux/store/store";
@@ -17,7 +17,9 @@ import {CountryCode} from "libphonenumber-js";
 import {getValidationSchema} from "./validationSchema";
 
 //TODO Remove cast for countryCode(LOW)
-//TODO Check all props, delete don't using(MIDDLE)
+
+//TODO to all inputs, same style errors, now username is not ordinary,
+// may be change, all inputs to username style, our new style add (LOW)
 
 const initialFormValues: IFormValues = {
     username: "",
@@ -36,6 +38,7 @@ export const Form = () => {
     const dispatch = useDispatch();
     //TODO replace to selector with custom hook(LOW)
     const {registry: {loading}} = useSelector((state: RootState) => state);
+    const {fetchLoginAction, fetchRegistryAction} = actions;
 
     const changeFormType = () => {
         setIsShowRegistrationForm(prevType =>
@@ -53,16 +56,10 @@ export const Form = () => {
         });
     };
 
-
-    const formValues = {
-        ...initialFormValues,
-    };
-
-
     return (
         <Formik<IFormValues>
             enableReinitialize={true}
-            initialValues={formValues}
+            initialValues={initialFormValues}
             validationSchema={getValidationSchema}
             validateOnBlur={true}
             onSubmit={(values, {setSubmitting, resetForm}) => {
@@ -79,10 +76,7 @@ export const Form = () => {
                   isSubmitting = false,
                   resetForm,
                   setFieldValue,
-                  setFieldError,
-                  setTouched
               }) => {
-
                 return (
                     <form className={styles.formContainer} onSubmit={handleSubmit}>
                         <FormHeader
@@ -95,12 +89,8 @@ export const Form = () => {
                                 values={values}
                                 errors={errors}
                                 touched={touched}
-                                setTouched={setTouched}
-                                setPhoneError={setFieldError}
                                 isRegistrationForm={isShowRegistrationForm === ButtonViews.SIGN_UP}
-                                setTouchedPhone={function (isValidate: boolean): void {
-                                    throw new Error('Function not implemented.');
-                                }}/>
+                            />
                             {isShowRegistrationForm === ButtonViews.SIGN_UP &&
                                 <RegistrationFields
                                     values={values}

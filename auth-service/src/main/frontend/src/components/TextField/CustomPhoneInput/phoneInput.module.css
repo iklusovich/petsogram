@@ -1,8 +1,9 @@
 .container {
-   border-bottom: 2px solid black;
+    border-bottom: 2px solid black;
     width: 78%;
     margin: 10px auto;
 }
+
 .input {
     justify-content: center;
     border: none;

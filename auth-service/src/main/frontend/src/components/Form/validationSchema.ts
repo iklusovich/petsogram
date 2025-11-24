@@ -7,8 +7,11 @@ import {isValidPhoneNumber} from 'libphonenumber-js';
 import {isValidPhone, normalizePhone} from "../../utils/function";
 import {api} from "../../api/api";
 
+//TODO поправить баг с валидацией, сделать ее налету, убрать магические записи(HIGH)
+//TODO при проверке телефона дергается ручка два раза(HIGH)
+//TODO подключить лодашевский дебаунс, на все инпуты, наверно реализация TextField, CustomPhoneInput(HIGH)
+//TODO Все таки поробавать запихнуть селектор(LOW)
 
-//TODO поправить баг с валидацией, сделать ее налету(HIGH)
 const createValidationSchema = Yup.object<IFormValues>().shape({
     username: Yup.string()
         .min(2, IErrorFieldTexts.LITTLE_SIZE)
@@ -50,10 +53,10 @@ const createValidationSchema = Yup.object<IFormValues>().shape({
                     value: normalizePhone(value),
                     type: IFieldName.PHONE
                 });
-                return !exists; // Возврат FALSE = ошибка (уже существует)
+                return !exists;
             } catch (error) {
                 console.error('Ошибка проверки phone:', error);
-                return true; // На ошибку пропусти валидацию
+                return true;
             }
         }),
 
